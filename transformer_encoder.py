@@ -145,7 +145,7 @@ class TransformerEncoder(network.Network):
       embeddings = tf.cast(embeddings, tf.float16)
 
     data = embeddings
-    attention_mask = layers.SelfAttentionMask()([data, mask])
+    attention_mask = self_attention_mask.SelfAttentionMask()([data, mask])
     for i in range(num_layers):
       layer = layers.Transformer(
           num_attention_heads=num_attention_heads,
