@@ -20,7 +20,7 @@ from __future__ import division
 from __future__ import print_function
 
 import tensorflow as tf
-from official.modeling import tf_utils
+import tf_utils
 
 
 @tf.keras.utils.register_keras_serializable(package='Text')
