@@ -26,6 +26,7 @@ import activations
 import on_device_embedding
 import position_embedding
 import transformer
+import self_attention_mask
 
 @tf.keras.utils.register_keras_serializable(package='Text')
 class TransformerEncoder(network.Network):
