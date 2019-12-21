@@ -21,7 +21,7 @@ from __future__ import print_function
 
 import tensorflow as tf
 
-from official.nlp.modeling import networks
+import classification
 
 
 @tf.keras.utils.register_keras_serializable(package='Text')
@@ -72,7 +72,7 @@ class BertClassifier(tf.keras.Model):
     _, cls_output = network(inputs)
     cls_output = tf.keras.layers.Dropout(rate=dropout_rate)(cls_output)
 
-    self.classifier = networks.Classification(
+    self.classifier = classification.Classification(
         input_width=cls_output.shape[-1],
         num_classes=num_classes,
         initializer=initializer,
