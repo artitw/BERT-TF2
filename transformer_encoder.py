@@ -23,7 +23,8 @@ import tensorflow as tf
 
 from tensorflow.python.keras.engine import network  # pylint: disable=g-direct-tensorflow-import
 import activations
-import layers
+import on_device_embedding
+import position_embedding
 
 
 @tf.keras.utils.register_keras_serializable(package='Text')
@@ -106,7 +107,7 @@ class TransformerEncoder(network.Network):
     type_ids = tf.keras.layers.Input(
         shape=(sequence_length,), dtype=tf.int32, name='input_type_ids')
 
-    self._embedding_layer = layers.OnDeviceEmbedding(
+    self._embedding_layer = on_device_embedding.OnDeviceEmbedding(
         vocab_size=vocab_size,
         embedding_width=hidden_size,
         initializer=initializer,
@@ -114,7 +115,7 @@ class TransformerEncoder(network.Network):
     word_embeddings = self._embedding_layer(word_ids)
 
     # Always uses dynamic slicing for simplicity.
-    self._position_embedding_layer = layers.PositionEmbedding(
+    self._position_embedding_layer = position_embedding.PositionEmbedding(
         initializer=initializer,
         use_dynamic_slicing=True,
         max_sequence_length=max_sequence_length)
