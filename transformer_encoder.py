@@ -25,7 +25,7 @@ from tensorflow.python.keras.engine import network  # pylint: disable=g-direct-t
 import activations
 import on_device_embedding
 import position_embedding
-
+import transformer
 
 @tf.keras.utils.register_keras_serializable(package='Text')
 class TransformerEncoder(network.Network):
@@ -122,7 +122,7 @@ class TransformerEncoder(network.Network):
     position_embeddings = self._position_embedding_layer(word_embeddings)
 
     type_embeddings = (
-        layers.OnDeviceEmbedding(
+        on_device_embedding.OnDeviceEmbedding(
             vocab_size=type_vocab_size,
             embedding_width=hidden_size,
             initializer=initializer,
@@ -147,7 +147,7 @@ class TransformerEncoder(network.Network):
     data = embeddings
     attention_mask = self_attention_mask.SelfAttentionMask()([data, mask])
     for i in range(num_layers):
-      layer = layers.Transformer(
+      layer = transformer.Transformer(
           num_attention_heads=num_attention_heads,
           intermediate_size=intermediate_size,
           intermediate_activation=activation,
